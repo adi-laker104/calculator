@@ -7,8 +7,32 @@ body {
 }
 
 .frame {
-    height: 550px;
+    height: 600px;
     width: 400px;
     border: 5px solid gray;
-    border-radius: 10px;
+}
+
+.output_row, .first_row, .second_row, .third_row, .fourth_row, .fifth_row {
+    border: 1px solid black;
+    width: 100%;
+    height: 98px;
+    display: flex;
+}
+
+.first_row, .second_row, .third_row, .fourth_row, .fifth_row {
+    justify-content: space-around;
+}
+
+.output_row {
+    font-size: 75px;
+    align-items: center;
+    justify-content: flex-end;
+    
+
+}
+
+button {
+    width: 100%;
+    height: 100%;
+    font-size: 25px;
 }
