@@ -1,5 +1,6 @@
 //Output value holder
 const outputDiv = document.getElementById("outputDiv");
+outputDiv.textContent = 0;
 
 
 // +/- Button Logic
@@ -8,12 +9,13 @@ const changeSignButton = document.getElementById("change_sign");
 let i = 0;
 changeSignButton.addEventListener("click", function() {
     if (i % 2 == 0) {
-    outputDiv.textContent = "-" + outputDiv.textContent;
+    outputDiv.textContent = "-" + +outputDiv.textContent;
     } 
     else {
         outputDiv.textContent = 
         outputDiv.textContent.substring(1,outputDiv.textContent.length);
     }
+    outputDiv.textContent = +outputDiv.textContent;
     i++;
 });
 
@@ -46,11 +48,11 @@ let firstInput = 0;
 let secondInput = 0;
 let opCounter = 0;
 let operatorVal = "";
-let clearInput = false;
+let clearInput = true;
 
 
 inputValues.forEach(element => {
-    element.addEventListener("click", function() {  
+    element.addEventListener("click", function() { 
         if (clearInput) {
             outputDiv.textContent = "";
             clearInput = false;
@@ -67,20 +69,23 @@ operatorValues.forEach(operation => {
             firstInput = +outputDiv.textContent;
             console.log(firstInput);
             operatorVal = operation.id;
-            clearInput = true;
         }
         else {
             secondInput = +outputDiv.textContent;
             outputDiv.textContent = operate(operatorVal, firstInput, secondInput);
-            clearInput = false;
         }
+        clearInput = true;
         opCounter++;
     })
 
 });
 
 dotValues.forEach(element => {
-    element.addEventListener("click", function() {   
+    element.addEventListener("click", function() {
+        if (clearInput = true) {
+            outputDiv.textContent = "0.";
+            clearInput = false;
+        }   
         if (outputDiv.textContent.indexOf(".") == -1)
              {
                 outputDiv.textContent += element.textContent;
@@ -120,5 +125,6 @@ clearButton.addEventListener("click", function() {
     clickCounter = 0;
     opCounter = 0;
     operatorVal = "";
-    clearInput = false;
+    clearInput = true;
+    i = 0;
 });
