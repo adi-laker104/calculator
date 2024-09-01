@@ -1,13 +1,6 @@
 //Output value holder
 const outputDiv = document.getElementById("outputDiv");
 
-//AC Button Logic
-
-const clearButton = document.getElementById("clear");
-
-clearButton.addEventListener("click", function() {   
-    outputDiv.textContent = "";
-});
 
 // +/- Button Logic
 
@@ -25,66 +18,107 @@ changeSignButton.addEventListener("click", function() {
 });
 
 
+//Add, Subtract, Multiply, Divide Functions
+
+function add (a,b) {
+    return Math.round(10*(a + b))/10;
+}
+
+function subtract (a,b) {
+    return Math.round(10*(a - b))/10;
+}
+
+function multiply (a,b) {
+    return Math.round(10*(a * b))/10;
+}
+
+function divide (a,b) {
+    return Math.round(10*(a / b))/10;
+}
+
 //Input Button Logic
 const inputValues = document.querySelectorAll(".input");
 const dotValues = document.querySelectorAll(".dot");
-let dotIndex = 0;
+const operatorValues = document.querySelectorAll(".operator");
+
+
+let firstInput = 0;
+let secondInput = 0;
+let opCounter = 0;
+let operatorVal = "";
+let clearInput = false;
+
 
 inputValues.forEach(element => {
-    element.addEventListener("click", function() {   
+    element.addEventListener("click", function() {  
+        if (clearInput) {
+            outputDiv.textContent = "";
+            clearInput = false;
+        }
         outputDiv.textContent += element.textContent;
+        
     })
+});
+
+
+operatorValues.forEach(operation => {   
+    operation.addEventListener("click",function() {
+        if (opCounter % 2 == 0) {
+            firstInput = +outputDiv.textContent;
+            console.log(firstInput);
+            operatorVal = operation.id;
+            clearInput = true;
+        }
+        else {
+            secondInput = +outputDiv.textContent;
+            outputDiv.textContent = operate(operatorVal, firstInput, secondInput);
+            clearInput = false;
+        }
+        opCounter++;
+    })
+
 });
 
 dotValues.forEach(element => {
     element.addEventListener("click", function() {   
-        if (dotIndex == 0 ) {
-        //console.log(dotValues);
-        outputDiv.textContent += element.textContent;
+        if (outputDiv.textContent.indexOf(".") == -1)
+             {
+                outputDiv.textContent += element.textContent;
         }
-        dotIndex++;
     })
 });
 
-//Add, Subtract, Multiply, Divide Functions
 
-function add (a,b) {
-    return a + b;
+function operate(operator, a, b) {
+    if (operator == "add_button") {
+        return add(+a,+b);
+    }
+
+    if (operator == "multiply_button") {
+        return multiply(+a,+b);
+    }
+
+    if (operator == "subtract_button") {
+        return subtract(+a,+b);
+    }
+
+    if (operator == "divide_button") {
+        return divide(+a,+b);
+    }
+    
 }
 
-function subtract (a,b) {
-    return a - b;
-}
 
-function multiply (a,b) {
-    return a * b;
-}
+//AC Button Logic
 
-function divide (a,b) {
-    return a / b;
-}
+const clearButton = document.getElementById("clear");
 
-//Variable creation for first and second input number
-let firstInput = 0;
-let clickCounter = 0;
-let operatorVal = "";
-const operatorValues = document.querySelectorAll(".operator");
-const equalButton = document.getElementById("equal_button");
-operatorValues.forEach(operation => {   
-    operation.addEventListener("click",function() {
-        if (clickCounter % 2 == 0) 
-            {
-            operatorVal = operation.id;
-            console.log(operatorVal);
-            firstInput = outputDiv.textContent;
-            outputDiv.textContent = "";
-            }
-
-        else {
-            secondInput = outputDiv.textContent;
-            outputDiv.textContent = "";
-        }
-        clickCounter++;
-    })
-
+clearButton.addEventListener("click", function() {   
+    outputDiv.textContent = "";
+    firstInput = 0;
+    secondInput = 0;
+    clickCounter = 0;
+    opCounter = 0;
+    operatorVal = "";
+    clearInput = false;
 });
