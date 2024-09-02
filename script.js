@@ -65,17 +65,21 @@ inputValues.forEach(element => {
 
 operatorValues.forEach(operation => {   
     operation.addEventListener("click",function() {
-        if (opCounter % 2 == 0) {
+        if (opCounter == 0) {
+            operatorVal = operation.id; 
             firstInput = +outputDiv.textContent;
-            console.log(firstInput);
-            operatorVal = operation.id;
+            clearInput = true;
         }
+
         else {
-            secondInput = +outputDiv.textContent;
-            outputDiv.textContent = operate(operatorVal, firstInput, secondInput);
+            secondInput = +outputDiv.textContent; 
+            outputDiv.textContent = operate(operatorVal, firstInput, secondInput); 
+            operatorVal = operation.id; 
+            firstInput = +outputDiv.textContent; 
+            clearInput = true;    
         }
-        clearInput = true;
-        opCounter++;
+
+        opCounter++; 
     })
 
 });
@@ -109,6 +113,10 @@ function operate(operator, a, b) {
 
     if (operator == "divide_button") {
         return divide(+a,+b);
+    }
+
+    if (operator == "equal_button") {
+        return outputDiv.textContent;
     }
     
 }
