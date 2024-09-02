@@ -112,6 +112,9 @@ function operate(operator, a, b) {
     }
 
     if (operator == "divide_button") {
+        if (+b == 0) {
+            return "wut";
+        }
         return divide(+a,+b);
     }
 
